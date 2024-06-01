@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 import com.example.dto.CategoryDto;
+import com.example.exceptions.ResourceNotFoundException;
 import com.example.persistence.entity.Category;
 import com.example.persistence.repository.CategoryRepository;
 import com.example.persistence.util.Status;
@@ -28,7 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findById(Integer id) {
         return  categoryRepository.findById(id).
-                orElseThrow(()-> new RuntimeException("No se encontro la category con id:" + id)) ;
+                orElseThrow(()-> new ResourceNotFoundException("No se encontro la category con id:" + id)) ;
     }
 
     @Override

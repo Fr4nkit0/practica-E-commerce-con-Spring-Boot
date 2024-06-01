@@ -1,6 +1,8 @@
 package com.example.service.impl;
 
 import com.example.dto.ProductDto;
+import com.example.exceptions.ResourceNotFoundException;
+import com.example.persistence.entity.Category;
 import com.example.persistence.entity.Product;
 import com.example.persistence.repository.ProductRepository;
 import com.example.service.ProductService;
@@ -8,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository ;
@@ -25,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findById(Integer id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No se encontro el producto con id:" + id)));
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontro el producto con id:" + id));
 
     }
 
@@ -35,6 +36,9 @@ public class ProductServiceImpl implements ProductService {
                 .name(productDto.getName())
                 .description(productDto.getDescription())
                 .price(productDto.getPrice())
+                .category(Category.builder()
+                        .id(productDto.getCategoryId())
+                        .build())
                 .build();
         return productRepository.save(newProduct) ;
     }
@@ -45,6 +49,9 @@ public class ProductServiceImpl implements ProductService {
         updateProduct.setName(productDto.getName());
         updateProduct.setDescription(productDto.getDescription());
         updateProduct.setPrice(productDto.getPrice());
+        updateProduct.setCategory(Category.builder()
+                .id(productDto.getCategoryId())
+                .build());
         return productRepository.save(updateProduct);
     }
 

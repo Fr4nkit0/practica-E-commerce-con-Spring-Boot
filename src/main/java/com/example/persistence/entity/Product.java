@@ -1,10 +1,7 @@
 package com.example.persistence.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
-import org.springframework.boot.autoconfigure.web.WebProperties;
-
 import java.math.BigDecimal;
 
 @Entity
@@ -21,4 +18,7 @@ public class Product {
     private String description;
     @Column (nullable = false)
     private BigDecimal price;
+    @ManyToOne(cascade = CascadeType.ALL,
+               optional = false)
+    private Category category;
 }
