@@ -18,7 +18,6 @@ public class Product {
     private String description;
     @Column (nullable = false)
     private BigDecimal price;
-    @ManyToOne(cascade = CascadeType.ALL,
-               optional = false)
+    @ManyToOne(optional = false)
     private Category category;
 }

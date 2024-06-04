@@ -4,6 +4,7 @@ import com.example.dto.ProductDto;
 import com.example.exceptions.ResourceNotFoundException;
 import com.example.persistence.entity.Category;
 import com.example.persistence.entity.Product;
+import com.example.persistence.repository.CategoryRepository;
 import com.example.persistence.repository.ProductRepository;
 import com.example.service.ProductService;
 import org.springframework.stereotype.Service;
@@ -12,20 +13,21 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
-    private final ProductRepository productRepository ;
+    private final ProductRepository productRespository;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+
+    public ProductServiceImpl(ProductRepository productRepository , CategoryRepository categoryRepository) {
+        this.productRespository = productRepository;
     }
 
     @Override
     public List<Product> findAll() {
-        return productRepository.findAll();
+        return productRespository.findAll();
     }
 
     @Override
     public Product findById(Integer id) {
-        return productRepository.findById(id)
+        return productRespository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No se encontro el producto con id:" + id));
 
     }
@@ -40,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
                         .id(productDto.getCategoryId())
                         .build())
                 .build();
-        return productRepository.save(newProduct) ;
+        return productRespository.save(newProduct) ;
     }
 
     @Override
@@ -52,12 +54,12 @@ public class ProductServiceImpl implements ProductService {
         updateProduct.setCategory(Category.builder()
                 .id(productDto.getCategoryId())
                 .build());
-        return productRepository.save(updateProduct);
+        return productRespository.save(updateProduct);
     }
 
     @Override
     public List<Product> findByNameContaining(String name) {
         if (!StringUtils.hasText(name)) throw  new RuntimeException("Text Vacio") ;
-        return productRepository.findByNameContaining(name);
+        return productRespository.findByNameContaining(name);
     }
 }
