@@ -1,5 +1,6 @@
 package com.example.persistence.entity;
 
+import com.example.persistence.util.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,5 +22,5 @@ public class User {
     private String phoneNumber;
     @Column(nullable = false , length = 250)
     private String email;
-
+    private Role role;
 }

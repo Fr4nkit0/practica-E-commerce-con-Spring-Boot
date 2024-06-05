@@ -3,6 +3,7 @@ package com.example.dto;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @AllArgsConstructor
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Builder
-public class ProductDto {
+public class ProductDto implements Serializable {
     @NotNull @NotEmpty(message = "Name requerido")
     @Size(min = 2, max = 45)
     private String name;

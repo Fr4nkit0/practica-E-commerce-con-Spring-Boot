@@ -2,9 +2,11 @@ package com.example.controller;
 
 import com.example.dto.CategoryDto;
 import com.example.dto.ProductDto;
+import com.example.exceptions.ResourceNotFoundException;
 import com.example.persistence.entity.Category;
 import com.example.persistence.entity.Product;
 import com.example.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,7 @@ import java.util.List;
 @RequestMapping("api/v2")
 public class CategoryController {
     private final CategoryService categoryService ;
-
+    @Autowired
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
@@ -23,9 +25,7 @@ public class CategoryController {
     @GetMapping("/category")
     public ResponseEntity<List<Category>> findAll (){
         List<Category> categories = categoryService.findAll() ;
-        if (categories.isEmpty()){
-            throw  new RuntimeException("Registros vacios") ;
-        }
+        if (categories.isEmpty()){throw  new ResourceNotFoundException("Registros vacios") ;}
         return ResponseEntity.ok(categories) ;
     }
     @GetMapping ("/product/{categoryId}")
