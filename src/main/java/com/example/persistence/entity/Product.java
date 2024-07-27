@@ -18,6 +18,7 @@ public class Product {
     private String description;
     @Column (nullable = false)
     private BigDecimal price;
-    @ManyToOne(optional = false)
-    private Category category;
+    @Column(name = "category_id" , nullable = false)
+    private Integer categoryId;
+
 }
