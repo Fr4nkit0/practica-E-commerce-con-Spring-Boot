@@ -1,5 +1,6 @@
 package com.example.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -9,15 +10,20 @@ import java.io.Serializable;
 
 
 public record SaveUser(
-        @NotNull @NotEmpty(message = "Username Requerido") @Size(min=2 , max = 12)
+        @NotBlank(message ="{generic.notBlank}")
+        @Size(min=3 , max = 12 , message = "{generic.size}")
         String username,
-        @NotNull @NotEmpty(message = "Password Requerido") @Size(min=8 , max = 16)
+        @NotBlank(message ="{generic.notBlank}")
+        @Size(min=8 , max = 16, message = "{generic.size}")
         String password,
-        @NotNull @NotEmpty(message = "Repeated Password Requered") @Size(min=8 , max = 16)
+        @NotBlank(message ="{generic.notBlank}")
+        @Size(min=8 , max = 16, message = "{generic.size}")
         String repeatedPassword,
-        @NotNull @NotEmpty(message = "Phone Number Requered") @Size(max = 20)
+        @NotBlank(message ="{generic.notBlank}")
+        @Size(min=7,max = 20, message = "{generic.size}")
         String phoneNumber,
-        @NotNull @NotEmpty(message = "Email Requered") @Size(min=10, max = 250)
+        @NotBlank(message ="{generic.notBlank}")
+        @Size(min=10, max = 250, message = "{generic.size}")
         String email
 ) implements Serializable {
 }

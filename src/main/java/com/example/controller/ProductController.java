@@ -5,6 +5,9 @@ import com.example.dto.response.GetProduct;
 import com.example.persistence.entity.Product;
 import com.example.service.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,30 +15,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("/products")
 public class ProductController {
     private final ProductService productService;
 
+    @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-    @GetMapping("/products")
-    public ResponseEntity<List<GetProduct>> findAll (){
-        return ResponseEntity.ok(productService.findAll()) ;}
-    @GetMapping("/product/{productId}")
+    @GetMapping
+    public ResponseEntity<Page<GetProduct>> findAll (Pageable pageable){
+        return ResponseEntity.ok(productService.findAll(pageable)) ;}
+    @GetMapping("/{productId}")
     public ResponseEntity<GetProduct> findById (@PathVariable Integer productId){
         return ResponseEntity.ok(productService.findById(productId));
     }
-    @PostMapping("/product")
+    @PostMapping
     public ResponseEntity<GetProduct> createOne (@RequestBody @Valid  SaveProduct saveProduct){
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.createOne(saveProduct));
     }
-    @PutMapping("/product/{productId}")
+    @PutMapping("/{productId}")
     public ResponseEntity<GetProduct> updateOne (@RequestBody @Valid  SaveProduct updateProduct,
                                                  @PathVariable Integer productId){
         return ResponseEntity.ok(productService.updateOne(updateProduct,productId));
     }
-    @DeleteMapping("/product/{productId}")
+    @DeleteMapping("/{productId}")
     public ResponseEntity<Void> deleteOne (Integer productId){
         productService.deleteOne(productId);
         return ResponseEntity.noContent().build();

@@ -9,14 +9,15 @@ import java.math.BigDecimal;
 
 
 public record SaveProduct (
-        @NotNull @NotEmpty(message = "Name requerido")
-        @Size(min = 2, max = 45)
+        @NotBlank(message = "{generic.notBlank}")
+        @Size(min = 2, max = 45,message ="{generic.size}")
         String name,
-        @NotNull @Min(value = 10)
+        @NotBlank(message = "{generic.notBlank}")
+        @Size(min = 15,max = 255,message = "{generic.size}")
         String description,
-        @DecimalMin(value = "0.01", message = "El precio no es valido")
+        @DecimalMin(value = "0.01", message = "the minimum value is 0.01")
         BigDecimal price,
-        @Min(1)
+        @Min(value = 1,message = "{generic.min}")
         Integer categoryId
 )implements Serializable {
 }

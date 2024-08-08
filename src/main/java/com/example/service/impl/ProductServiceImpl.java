@@ -4,17 +4,16 @@ import com.example.dto.request.SaveProduct;
 import com.example.dto.response.GetProduct;
 import com.example.exceptions.ResourceNotFoundException;
 import com.example.mapper.ProductMapper;
-import com.example.persistence.entity.Category;
+
 import com.example.persistence.entity.Product;
 import com.example.persistence.repository.CategoryRepository;
 import com.example.persistence.repository.ProductRepository;
 import com.example.service.ProductService;
-import jakarta.persistence.EntityManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -28,10 +27,10 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<GetProduct> findAll() {
-        List<Product> entities = productRepository.findAll();
+    public Page<GetProduct> findAll(Pageable pageable) {
+        Page<Product> entities = productRepository.findAll(pageable);
         if (entities.isEmpty()) throw  new ResourceNotFoundException("Registros Vacios");
-        return ProductMapper.toGetListDto(entities);
+        return entities.map(ProductMapper::toGetDto);
     }
 
     @Override

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import com.example.persistence.util.Status;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,4 +21,8 @@ public class Category {
     @Embedded
     @Enumerated(EnumType.STRING)
     private Status Status ;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "category")
+    private List<Product> products;
+
 }

@@ -14,7 +14,7 @@ public class User {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Integer id ;
-    @Column(nullable = false , length = 12)
+    @Column(nullable = false , length = 12 , unique = true)
     private String username;
     @Column(nullable = false , length = 16)
     private String password;
@@ -22,5 +22,6 @@ public class User {
     private String phoneNumber;
     @Column(nullable = false , length = 250)
     private String email;
+
     private Role role;
 }

@@ -13,7 +13,8 @@ public class ProductMapper {
         return new GetProduct(
                 entity.getName(),
                 entity.getDescription(),
-                entity.getPrice());
+                entity.getPrice(),
+                entity.getCategory().getName());
     }
     public static List<GetProduct> toGetListDto (List<Product> entities){
         if (entities==null) return  null;

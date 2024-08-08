@@ -21,4 +21,11 @@ public class Product {
     @Column(name = "category_id" , nullable = false)
     private Integer categoryId;
 
+
+    @ManyToOne
+    @JoinColumn(name = "category_id",insertable = false,updatable = false)
+    private Category category ;
+
+
+
 }

@@ -3,12 +3,13 @@ package com.example.service;
 
 import com.example.dto.request.SaveProduct;
 import com.example.dto.response.GetProduct;
-import com.example.persistence.entity.Product;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 public interface ProductService {
-    List<GetProduct> findAll () ;
+    Page<GetProduct> findAll (Pageable pageable) ;
     GetProduct findById (Integer id);
     GetProduct createOne (SaveProduct saveProduct) ;
     GetProduct updateOne (SaveProduct updateProduct, Integer id) ;
