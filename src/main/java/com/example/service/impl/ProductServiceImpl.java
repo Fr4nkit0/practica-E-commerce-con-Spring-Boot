@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<GetProduct> findAll(Pageable pageable) {
         Page<Product> entities = productRepository.findAll(pageable);
-        if (entities.isEmpty()) throw  new ResourceNotFoundException("Registros Vacios");
+        if (entities.isEmpty()) throw  new ResourceNotFoundException("empty records");
         return entities.map(ProductMapper::toGetDto);
     }
 
@@ -42,8 +42,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public GetProduct createOne(SaveProduct saveProduct) {
         if (!categoryRepository.existsById(saveProduct.categoryId()))throw  new RuntimeException("No existe la categoria") ;
-        Product createProduct = ProductMapper.toGetEntity(saveProduct);
-        return ProductMapper.toGetDto(productRepository.save(createProduct)) ;
+        return ProductMapper.toGetDto(productRepository.save(ProductMapper.toGetEntity(saveProduct))) ;
     }
 
     @Override
@@ -53,11 +52,6 @@ public class ProductServiceImpl implements ProductService {
         return ProductMapper.toGetDto(productRepository.save(oldProduct)) ;
     }
 
-    @Override
-    public void deleteOne(Integer id) {
-        Product deleteProduct = findByIdEntity(id) ;
-        productRepository.delete(deleteProduct);
-    }
 
     private Product findByIdEntity (Integer id){
         return productRepository.findById(id)

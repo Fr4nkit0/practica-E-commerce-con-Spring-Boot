@@ -1,5 +1,6 @@
 package com.example.persistence.entity;
 
+import com.example.persistence.util.Status;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
@@ -20,7 +21,8 @@ public class Product {
     private BigDecimal price;
     @Column(name = "category_id" , nullable = false)
     private Integer categoryId;
-
+    @Enumerated(EnumType.STRING)
+    private Status status ;
 
     @ManyToOne
     @JoinColumn(name = "category_id",insertable = false,updatable = false)

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 public record GetUser(
+        String  name,
         String username,
         String email,
         @JsonProperty("phone_number") String phoneNumber

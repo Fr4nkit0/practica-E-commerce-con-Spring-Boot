@@ -4,6 +4,7 @@ import com.example.dto.response.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,4 +47,32 @@ public class GlobalExceptionHandler {
                         .method(request.getMethod())
                         .build()) ;
     }
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiResponse> handlerResourceNotFoundException ( HttpServletRequest request ,
+                                                                          ResourceNotFoundException resourceNotFoundException){
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.builder()
+                        .timeTamp(LocalDateTime.now())
+                        .backendMessage(resourceNotFoundException.getMessage())
+                        .message("Resource not found")
+                        .url(request.getRequestURL().toString())
+                        .method(request.getMethod())
+                        .build()) ;
+    }
+    @ExceptionHandler(UnsupportedOperationException.class)
+    public ResponseEntity<ApiResponse> handlerUnsupportedOperationException ( HttpServletRequest request ,
+                                                                              UnsupportedOperationException unsupportedOperationException){
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.builder()
+                        .timeTamp(LocalDateTime.now())
+                        .backendMessage(unsupportedOperationException.getMessage())
+                        .message("Operation no soportada")
+                        .url(request.getRequestURL().toString())
+                        .method(request.getMethod())
+                        .build()) ;
+    }
+
+
+
+
 }

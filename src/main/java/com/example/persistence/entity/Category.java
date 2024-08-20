@@ -18,9 +18,8 @@ public class Category {
     private Integer id;
     @Column(nullable = false , length = 45)
     private String name;
-    @Embedded
     @Enumerated(EnumType.STRING)
-    private Status Status ;
+    private Status status ;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "category")
     private List<Product> products;

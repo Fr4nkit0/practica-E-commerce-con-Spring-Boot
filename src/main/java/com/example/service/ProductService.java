@@ -13,5 +13,5 @@ public interface ProductService {
     GetProduct findById (Integer id);
     GetProduct createOne (SaveProduct saveProduct) ;
     GetProduct updateOne (SaveProduct updateProduct, Integer id) ;
-    void deleteOne (Integer id);
+
 }

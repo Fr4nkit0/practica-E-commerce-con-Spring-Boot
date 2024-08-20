@@ -3,6 +3,7 @@ package com.example.mapper;
 import com.example.dto.request.SaveProduct;
 import com.example.dto.response.GetProduct;
 import com.example.persistence.entity.Product;
+import com.example.persistence.util.Status;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class ProductMapper {
                 .description(saveProduct.description())
                 .name(saveProduct.name())
                 .categoryId(saveProduct.categoryId())
+                .status(Status.ENABLED)
                 .build() ;
     }
     public static void updateEntity (Product oldEntity , SaveProduct updateProduct){
